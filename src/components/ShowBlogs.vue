@@ -7,7 +7,7 @@
             <h2 v-rainbow>{{blog.title | to-uppercase}}</h2>
           </router-link>
           <article>
-              {{blog.body | snippet}}
+              {{blog.content | snippet}}
           </article>
       </div>
   </div>
@@ -23,12 +23,23 @@ export default {
       }
   },
   created () {
-      //let url = "https://jsonplaceholder.typicode.com/posts";
-      let url = "../../static/post.json";
+      let url = "https://wd2653859633wrgdqg.wilddogio.com/posts.json";
       this.$http.get(url)
         .then(function(data) {
-            this.blogs = data.body.slice(0, 10);
-      })
+          //console.log(data);
+          return data.json();
+          //this.blogs = data.body.slice(0, 10);
+      }).then(function(data) {
+        var blogArray = [];
+        for(let key in data) {
+          //console.log(key);
+          //console.log(data[key]);
+          data[key].id = key;
+          blogArray.push(data[key]);
+        }
+        console.log(blogArray);
+        this.blogs = blogArray;
+      });
   },
   computed: {
       filteredBlogs: function() {

@@ -1,7 +1,14 @@
 <template>
   <div id="single-blog">
     <h1>{{blog.title}}</h1>
-    <article>{{blog.body}}</article>
+    <article>{{blog.content}}</article>
+    <p>作者：{{blog.author}}</p>
+    <p>分类：</p>
+    <ul>
+      <li v-for="category in blog.categories" :key="category">
+        {{category}}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -15,10 +22,10 @@ export default {
     }
   },
   created() {
-    let url = "https://jsonplaceholder.typicode.com/posts/" + this.id;
+    let url = "https://wd2653859633wrgdqg.wilddogio.com/posts/" + this.id + ".json";
     this.$http.get(url)
       .then(function(data) {
-        //console.log(data);
+        console.log(data);
         this.blog = data.body;
       })
   }
